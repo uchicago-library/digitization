@@ -1,0 +1,32 @@
+// Output folder for TXT files
+var outputFolder = "/C/Digitization/TXT/";
+
+// Get PDF filename
+var pdfName = this.documentFileName;
+
+// Remove .pdf extension
+var baseName = pdfName.replace(/\.pdf$/i, "");
+
+// Build TXT path
+var txtPath = outputFolder + baseName + ".txt";
+
+try {
+
+    // Export PDF as plain text
+    this.saveAs({
+        cPath: txtPath,
+        cConvID: "com.adobe.acrobat.plain-text",
+        bPromptToOverwrite: false
+    });
+
+    // Prevent save prompts
+    this.dirty = false;
+
+    console.println("Saved: " + txtPath);
+
+} catch (e) {
+
+    console.println("Failed: " + pdfName + " -- " + e);
+
+    this.dirty = false;
+}
